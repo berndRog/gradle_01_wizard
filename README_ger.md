@@ -4,7 +4,7 @@
 
 Dieses Repository zeigt die erste von drei aufeinander aufbauenden Gradle-Stufen. Es enthält ein einzelnes, installierbares Android-Modul `app` und entspricht damit strukturell einem mit Android Studio erzeugten Compose-Projekt.
 
-Die zentrale Beschreibung steht in [docs/Gradle.md](docs/Gradle.md).
+Die zentrale Beschreibung steht in [docs/Gradle_ger.md](docs/Gradle_ger.md). Zusätzlich gibt es eine [englische Version](docs/Gradle.md).
 
 ## Die drei Stufen
 
