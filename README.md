@@ -1,18 +1,20 @@
-# Gradle-Beispiel: Wizard-Projekt
+# Gradle Example: Wizard Project
 
-Dieses Repository zeigt die erste von drei aufeinander aufbauenden Gradle-Stufen. Er enthält ein einzelnes, installierbares Android-Modul `app` und entspricht damit strukturell einem mit Android Studio erzeugten Compose-Projekt.
+[Deutsche Version](README_ger.md)
 
-Die zentrale Beschreibung steht in [docs/Gradle.md](docs/Gradle.md).
+This repository shows the first of three successive Gradle stages. It contains a single installable Android module named `app` and therefore structurally corresponds to a Compose project created with the Android Studio wizard.
 
-## Die drei Stufen
+The detailed explanation is currently available in German in [docs/Gradle.md](docs/Gradle.md).
 
-| Projekt | Inhalt | Schwerpunkt |
+## The three stages
+
+| Project | Contents | Focus |
 |---|---|---|
-| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
-| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` und `Shared` | Application- und Library-Modul |
-| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
+| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | one `app` module | Gradle files of a wizard project |
+| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` and `Shared` | application and library modules |
+| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | centralized configuration for `app` and `Shared` | extracting common settings from module build files |
 
-Die drei Projekte lassen sich unabhängig klonen:
+The three projects can be cloned independently:
 
 ```bash
 git clone https://github.com/berndRog/gradle_01_wizard.git
@@ -20,4 +22,4 @@ git clone https://github.com/berndRog/gradle_02_shared.git
 git clone https://github.com/berndRog/gradle_03_modules.git
 ```
 
-Der Version Catalog enthält bereits Bibliotheken für spätere Vorlesungsbeispiele. Für das Verständnis dieses Projekts ist zunächst nur wichtig, wie Plugins und Bibliotheken über ihre Aliase eingebunden werden.
+The version catalog already contains libraries used in later course examples. At this stage, the important point is how plugins and libraries are included through their aliases.
