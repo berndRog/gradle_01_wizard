@@ -179,4 +179,4 @@ Der Pfad unterscheidet sich von Rechner zu Rechner. Deshalb wird die Datei durch
 | `local.properties` | Welche lokalen Rechnerpfade gelten? |
 | Gradle Wrapper | Mit welcher Gradle-Version wird gebaut? |
 
-Die nächste Entwicklungsstufe zeigt das Projekt [`gradle_02_shared`](https://github.com/berndRog/gradle_01_wizard/tree/shared). Dort kommt ein Android-Library-Modul hinzu.
+Die nächste Entwicklungsstufe zeigt das Projekt [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared). Dort kommt ein Android-Library-Modul hinzu.
