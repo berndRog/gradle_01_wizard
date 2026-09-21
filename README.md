@@ -4,7 +4,7 @@
 
 This repository shows the first of three successive Gradle stages. It contains a single installable Android module named `app` and therefore structurally corresponds to a Compose project created with the Android Studio wizard.
 
-The detailed explanation is currently available in German in [docs/Gradle.md](docs/Gradle.md).
+The detailed explanation is available in [docs/Gradle.md](docs/Gradle.md). A [German version](docs/Gradle_ger.md) is also available.
 
 ## The three stages
 
