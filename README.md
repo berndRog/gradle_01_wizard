@@ -8,9 +8,9 @@ Die zentrale Beschreibung steht in [docs/Gradle.md](docs/Gradle.md).
 
 | Projekt | Inhalt | Schwerpunkt |
 |---|---|---|
-| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard/tree/master) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
-| [`gradle_02_shared`](https://github.com/berndRog/gradle_01_wizard/tree/shared) | `app` und `Shared` | Application- und Library-Modul |
-| [`gradle_03_modules`](https://github.com/berndRog/gradle_01_wizard/tree/modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
+| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
+| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` und `Shared` | Application- und Library-Modul |
+| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
 
 Die drei Projekte lassen sich unabhängig klonen:
 
