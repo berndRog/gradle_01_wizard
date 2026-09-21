@@ -1,10 +1,12 @@
-# Gradle in einem Android-Projekt
+# Gradle in an Android Project
 
-## Stufe 1: Basisprojekt aus dem Android-Studio-Wizard
+[Deutsche Version](Gradle_ger.md)
 
-Android Studio verwendet **Gradle** als Build-System. Gradle übersetzt den Quellcode, verarbeitet Android-Ressourcen, bindet Bibliotheken ein, führt Tests aus und erzeugt APK- beziehungsweise AAB-Dateien. Die Endung `.kts` bedeutet, dass die Buildskripte mit **Kotlin Script** geschrieben sind.
+## Stage 1: Base project from the Android Studio wizard
 
-Das Projekt `gradle_01_wizard` besitzt die typische Struktur eines Projekts mit genau einem Application-Modul:
+Android Studio uses **Gradle** as its build system. Gradle compiles the source code, processes Android resources, includes libraries, runs tests, and creates APK or AAB files. The `.kts` extension indicates that the build scripts are written using **Kotlin Script**.
+
+The `gradle_01_wizard` project has the typical structure of a project with exactly one application module:
 
 ```text
 gradle_01_wizard/
@@ -22,11 +24,11 @@ gradle_01_wizard/
 └── gradlew.bat
 ```
 
-Der Version Catalog und die Abhängigkeiten des `app`-Moduls sind für die späteren Kursbeispiele bereits erweitert. Die grundsätzliche Aufgabenverteilung der Dateien entspricht weiterhin dem Wizard-Projekt.
+The version catalog and the dependencies of the `app` module have already been extended for later course examples. The basic responsibilities of the files still correspond to those of a wizard project.
 
-## `settings.gradle.kts`: Aufbau des Projekts
+## `settings.gradle.kts`: project structure
 
-`settings.gradle.kts` wird zu Beginn eines Builds ausgewertet. Die Datei legt fest, welche Module zum Projekt gehören und aus welchen Repositories Plugins und Bibliotheken geladen werden dürfen.
+`settings.gradle.kts` is evaluated at the beginning of a build. It defines which modules belong to the project and from which repositories plugins and libraries may be downloaded.
 
 ```kotlin
 pluginManagement {
@@ -49,13 +51,13 @@ rootProject.name = "gradle_01_wizard"
 include(":app")
 ```
 
-`pluginManagement` betrifft Gradle-Plugins. `dependencyResolutionManagement` betrifft die Bibliotheken des Programms. Mit `FAIL_ON_PROJECT_REPOS` werden zusätzliche Repository-Angaben in einzelnen Modulen absichtlich verhindert. `include(":app")` registriert das einzige Modul dieses Standes.
+`pluginManagement` concerns Gradle plugins. `dependencyResolutionManagement` concerns the application's libraries. `FAIL_ON_PROJECT_REPOS` deliberately prevents additional repository declarations in individual modules. `include(":app")` registers the only module in this stage.
 
-Das Foojay-Resolver-Plugin in dieser Datei unterstützt Gradle dabei, eine passende Java-Toolchain bereitzustellen. Es gehört zur Buildumgebung und nicht zur Android-App.
+The Foojay resolver plugin in this file helps Gradle provide a suitable Java toolchain. It is part of the build environment, not the Android app.
 
-## Root-`build.gradle.kts`: Plugins bereitstellen
+## Root `build.gradle.kts`: making plugins available
 
-Das `build.gradle.kts` im Projektverzeichnis gehört zum Root-Projekt. Im ersten Stand stellt es Plugins bereit, wendet sie aber nicht auf das Root-Projekt an:
+The `build.gradle.kts` in the project directory belongs to the root project. In the first stage, it makes plugins available without applying them to the root project:
 
 ```kotlin
 plugins {
@@ -64,11 +66,11 @@ plugins {
 }
 ```
 
-`apply false` bedeutet: Plugin und Version sind dem Build bekannt; ein Modul entscheidet später selbst, ob es das Plugin verwendet. Die im Projekt zusätzlich vorbereiteten Plugins für Kotlin Serialization und KSP werden erst von Beispielen benötigt, die Serialisierung oder Codegenerierung verwenden.
+`apply false` means that the plugin and its version are known to the build; a module later decides whether to apply the plugin. The plugins for Kotlin Serialization and KSP that are also prepared in this project are only needed by examples that use serialization or code generation.
 
-## `gradle/libs.versions.toml`: Version Catalog
+## `gradle/libs.versions.toml`: version catalog
 
-Der Version Catalog verwaltet Versionen, Bibliotheken und Plugins zentral:
+The version catalog manages versions, libraries, and plugins centrally:
 
 ```toml
 [versions]
@@ -87,22 +89,22 @@ android-application = {
 }
 ```
 
-Ein Modul verwendet danach nur noch typsichere Aliase:
+A module can then use type-safe aliases:
 
 ```kotlin
 alias(libs.plugins.android.application)
 implementation(libs.androidx.core.ktx)
 ```
 
-Bindestriche im TOML-Alias werden beim Zugriff zu Punkten. Aus `androidx-core-ktx` wird daher `libs.androidx.core.ktx`. Nicht jede im Catalog deklarierte Bibliothek muss bereits verwendet werden. Im Beispiel sind Room, Koin, Coil und Retrofit bewusst für spätere Vorlesungsstufen vorbereitet.
+Hyphens in a TOML alias become dots when the alias is accessed. Therefore, `androidx-core-ktx` becomes `libs.androidx.core.ktx`. Not every library declared in the catalog has to be used already. Room, Koin, Coil, and Retrofit are deliberately prepared for later course stages in this example.
 
-Die Compose-Bibliotheken verwenden eine **BOM** (Bill of Materials). Sie legt zusammenpassende Compose-Versionen fest, sodass die einzelnen Compose-Einträge keine eigene Versionsnummer benötigen.
+The Compose libraries use a **BOM** (Bill of Materials). It defines a compatible set of Compose versions, so the individual Compose entries do not require their own version numbers.
 
-## `app/build.gradle.kts`: das Application-Modul
+## `app/build.gradle.kts`: the application module
 
-Jedes Modul besitzt grundsätzlich eine eigene Builddatei. Im `plugins`-Block wird `app` als installierbare Android-Anwendung gekennzeichnet. Weitere Plugins aktivieren unter anderem den Compose-Compiler, Kotlin Serialization und die KSP-Codegenerierung.
+Each module generally has its own build file. In the `plugins` block, `app` is marked as an installable Android application. Additional plugins enable the Compose compiler, Kotlin Serialization, and KSP code generation, among other features.
 
-Der `android`-Block beschreibt die Android-spezifische Konfiguration:
+The `android` block describes the Android-specific configuration:
 
 ```kotlin
 android {
@@ -121,62 +123,62 @@ android {
 }
 ```
 
-- `namespace` bestimmt den Namensraum der generierten Android-Klassen, beispielsweise `R` und `BuildConfig`.
-- `applicationId` identifiziert die installierte App eindeutig.
-- `minSdk` legt die kleinste unterstützte Android-Version fest.
-- `targetSdk` bestimmt, für welche Android-Version das Verhalten der App ausgelegt und getestet ist.
-- `compileSdk` legt fest, welche Android-APIs beim Übersetzen verfügbar sind.
-- `versionCode` ist die intern steigende Versionsnummer; `versionName` ist die sichtbare Versionsbezeichnung.
+- `namespace` defines the namespace of generated Android classes such as `R` and `BuildConfig`.
+- `applicationId` uniquely identifies the installed app.
+- `minSdk` specifies the oldest supported Android version.
+- `targetSdk` specifies the Android version for which the app's behavior is designed and tested.
+- `compileSdk` specifies which Android APIs are available during compilation.
+- `versionCode` is an internally increasing version number; `versionName` is the user-visible version label.
 
-`compileOptions` stellt für diesen Kurs Java 21 ein. `buildFeatures { compose = true }` aktiviert Compose. `testOptions` konfiguriert lokale beziehungsweise instrumentierte Tests.
+`compileOptions` configures Java 21 for this course. `buildFeatures { compose = true }` enables Compose. `testOptions` configures local and instrumented tests.
 
-Im `dependencies`-Block stehen die Abhängigkeiten des Moduls. Wichtige Konfigurationen sind:
+The `dependencies` block lists the module's dependencies. Important configurations include:
 
-| Konfiguration | Verwendung |
+| Configuration | Use |
 |---|---|
-| `implementation` | Produktionscode des Moduls |
-| `testImplementation` | lokale JVM-Tests |
-| `androidTestImplementation` | Tests auf Gerät oder Emulator |
-| `debugImplementation` | nur Debug-Builds, zum Beispiel Compose-Tooling |
-| `ksp` | Codegeneratoren, hier unter anderem Room |
+| `implementation` | production code of the module |
+| `testImplementation` | local JVM tests |
+| `androidTestImplementation` | tests on a device or emulator |
+| `debugImplementation` | debug builds only, for example Compose tooling |
+| `ksp` | code generators, including Room in this project |
 
-Das `app`-Modul dieses Repositories enthält bereits den vollständigen Kurs-Stack. Ein frisch erzeugtes Wizard-Projekt besitzt an dieser Stelle deutlich weniger Abhängigkeiten; die Bedeutung des Blocks bleibt jedoch gleich.
+The `app` module in this repository already contains the complete course stack. A newly generated wizard project has significantly fewer dependencies at this point, but the purpose of the block remains the same.
 
-## `gradle.properties`: Arbeitsweise von Gradle
+## `gradle.properties`: how Gradle operates
 
-`gradle.properties` enthält projektweite Eigenschaften des Build-Systems. In diesem Projekt begrenzt `org.gradle.jvmargs` unter anderem den Heap des Gradle-Daemons auf 2 GiB. `org.gradle.configuration-cache=true` aktiviert den Configuration Cache, damit Gradle eine unveränderte Konfigurationsphase bei späteren Builds überspringen kann. `kotlin.code.style=official` wählt den offiziellen Kotlin-Codestil.
+`gradle.properties` contains project-wide properties of the build system. In this project, `org.gradle.jvmargs` limits the Gradle daemon heap to 2 GiB, among other settings. `org.gradle.configuration-cache=true` enables the configuration cache so that Gradle can skip an unchanged configuration phase in subsequent builds. `kotlin.code.style=official` selects the official Kotlin coding style.
 
-## `local.properties`: Einstellungen des Entwicklungsrechners
+## `local.properties`: development machine settings
 
-`local.properties` wird lokal von Android Studio erzeugt und enthält typischerweise den Pfad zum Android SDK:
+`local.properties` is generated locally by Android Studio and usually contains the path to the Android SDK:
 
 ```properties
 sdk.dir=/Users/.../Library/Android/sdk
 ```
 
-Der Pfad unterscheidet sich von Rechner zu Rechner. Deshalb wird die Datei durch `.gitignore` ausgeschlossen und nicht im Repository gespeichert. Passwörter oder API-Schlüssel sollten ebenfalls nicht in versionierte Gradle-Dateien geschrieben werden.
+The path differs from one computer to another. The file is therefore excluded by `.gitignore` and is not stored in the repository. Passwords and API keys should likewise not be written to version-controlled Gradle files.
 
-## Gradle Wrapper und Daemon-JVM
+## Gradle Wrapper and daemon JVM
 
-`gradlew` ist das Startskript für macOS und Linux, `gradlew.bat` das entsprechende Windows-Skript. Beide verwenden die in `gradle/wrapper/gradle-wrapper.properties` festgelegte Gradle-Version. Dadurch benötigen alle Beteiligten dieselbe Build-Version, ohne Gradle separat installieren zu müssen.
+`gradlew` is the launcher script for macOS and Linux; `gradlew.bat` is its Windows counterpart. Both use the Gradle version defined in `gradle/wrapper/gradle-wrapper.properties`. This ensures that everyone uses the same build version without having to install Gradle separately.
 
 ```bash
 ./gradlew test
 ./gradlew assembleDebug
 ```
 
-`gradle-daemon-jvm.properties` beschreibt die Java-Version für den Gradle-Daemon und enthält plattformspezifische Bezugsquellen. Sie ist nicht mit `compileOptions` zu verwechseln: Die Daemon-JVM führt Gradle aus, während `compileOptions` das Ziel für den Java-Quellcode des Android-Moduls festlegt.
+`gradle-daemon-jvm.properties` describes the Java version for the Gradle daemon and contains platform-specific download sources. It must not be confused with `compileOptions`: the daemon JVM runs Gradle, while `compileOptions` defines the target for the Android module's Java source code.
 
-## Aufgabenverteilung im Überblick
+## Responsibilities at a glance
 
-| Datei | Leitfrage |
+| File | Key question |
 |---|---|
-| `settings.gradle.kts` | Welche Module und Repositories gehören zum Build? |
-| Root-`build.gradle.kts` | Welche Plugins stehen projektweit bereit? |
-| `gradle/libs.versions.toml` | Welche Versionen, Bibliotheken und Plugins sind bekannt? |
-| `app/build.gradle.kts` | Wie wird die konkrete Android-App gebaut? |
-| `gradle.properties` | Wie arbeitet Gradle in diesem Projekt? |
-| `local.properties` | Welche lokalen Rechnerpfade gelten? |
-| Gradle Wrapper | Mit welcher Gradle-Version wird gebaut? |
+| `settings.gradle.kts` | Which modules and repositories belong to the build? |
+| Root `build.gradle.kts` | Which plugins are available project-wide? |
+| `gradle/libs.versions.toml` | Which versions, libraries, and plugins are known? |
+| `app/build.gradle.kts` | How is the actual Android app built? |
+| `gradle.properties` | How does Gradle operate in this project? |
+| `local.properties` | Which paths apply to the local development machine? |
+| Gradle Wrapper | Which Gradle version is used for the build? |
 
-Die nächste Entwicklungsstufe zeigt das Projekt [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared). Dort kommt ein Android-Library-Modul hinzu.
+The next development stage is the [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) project. It adds an Android library module.
