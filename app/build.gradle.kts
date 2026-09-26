@@ -15,9 +15,9 @@ plugins {
 android {
    namespace = "de.rogallab.mobile"
 
-   // Compile against the Android 37 SDK APIs.
+   // Compile against the Android 37.1 SDK APIs.
    compileSdk {
-      version = release(37)
+      version = release(37) { minorApiLevel = 1 }
    }
 
    defaultConfig {
